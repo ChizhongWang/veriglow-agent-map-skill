@@ -1,13 +1,22 @@
 {
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "veriglow-skills",
   "description": "VeriGlow AI Agent Skills — discover data functions and APIs for any website",
-  "homepage": "https://veri-glow.com",
+  "owner": {
+    "name": "VeriGlow",
+    "email": "hi@veri-glow.com"
+  },
   "plugins": [
     {
       "name": "veriglow-agent-map",
       "description": "Look up VeriGlow Agent Map to discover data functions, internal APIs, and browser automation recipes for any website",
       "version": "0.1.0",
-      "path": "."
+      "author": {
+        "name": "VeriGlow",
+        "url": "https://veri-glow.com"
+      },
+      "source": "./plugins/veriglow-agent-map",
+      "category": "productivity"
     }
   ]
 }
