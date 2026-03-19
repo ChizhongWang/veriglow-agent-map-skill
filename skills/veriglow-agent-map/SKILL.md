@@ -135,9 +135,51 @@ const rows = [...table.querySelectorAll('tbody tr')].map(tr =>
 4. **Handle IP restrictions** — some Chinese government/financial data sources block overseas IPs; use a CN proxy when noted
 5. **Verify data freshness** — check the "Data availability" note for each source (e.g., T+1 means data is from the previous trading day)
 
-## Available Maps (59 data sources)
+## Example: FRED Economic Data
 
-Currently indexed: **55 Shanghai Stock Exchange pages** + 4 international APIs.
+Here is an example of using Agent Map to get US 10-Year Treasury yield data from FRED.
+
+### Direct API Call
+
+```bash
+curl "https://api.stlouisfed.org/fred/series/observations?series_id=DGS10&observation_start=2025-03-01&observation_end=2026-03-14&api_key=YOUR_API_KEY&file_type=json"
+```
+
+**Parameters:**
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| series_id | string | Yes | FRED series ID (e.g. GDP, DGS10, CPIAUCSL, FEDFUNDS) |
+| api_key | string | Yes | Free API key from https://fred.stlouisfed.org/docs/api/api_key.html |
+| file_type | string | Yes | Always `json` |
+| observation_start | string | No | Start date `YYYY-MM-DD` |
+| observation_end | string | No | End date `YYYY-MM-DD` |
+| frequency | string | No | Aggregation: `d`, `w`, `m`, `q`, `a` |
+| units | string | No | Transform: `lin` (levels), `pch` (% change), `log` |
+
+**Returns:** JSON with `observations` array of date-value pairs:
+
+```json
+{
+  "observations": [
+    {"date": "2025-03-03", "value": "4.24"},
+    {"date": "2025-03-04", "value": "4.18"},
+    {"date": "2025-03-05", "value": "4.26"}
+  ]
+}
+```
+
+**Key FRED Series:** GDP, CPIAUCSL (CPI), FEDFUNDS (Fed Funds Rate), DGS10 (10Y Treasury), DGS2 (2Y Treasury), T10Y2Y (10Y-2Y Spread), UNRATE (Unemployment), M2SL (M2 Money Supply), DEXUSEU (USD/EUR), VIXCLS (VIX).
+
+**Caveats:**
+- Free API key required — register at https://fred.stlouisfed.org/docs/api/api_key.html
+- Rate limit: ~120 requests/minute
+- Daily series return `'.'` for weekends/holidays (not null)
+- No IP restrictions
+
+## Available Maps (65 data sources)
+
+Currently indexed: **55 Shanghai Stock Exchange pages** + 6 FRED endpoints + 4 international APIs.
 
 ### Shanghai Stock Exchange (上海证券交易所) — 55 maps
 
@@ -212,6 +254,17 @@ Currently indexed: **55 Shanghai Stock Exchange pages** + 4 international APIs.
 | [Member List](https://veri-glow.com/www.sse.com.cn/market/othersdata/memberdata/memberlist/) | `www.sse.com.cn/market/othersdata/memberdata/memberlist/` | 1 |
 | ...and 10 more member/business qualification pages | | |
 
+### FRED (Federal Reserve Economic Data) — 6 maps
+
+| Source | URL | Functions |
+|--------|-----|-----------|
+| [Time Series Data](https://veri-glow.com/fred.stlouisfed.org/series/observations/) | `fred.stlouisfed.org/series/observations/` | 1 |
+| [Search Series](https://veri-glow.com/fred.stlouisfed.org/series/search/) | `fred.stlouisfed.org/series/search/` | 1 |
+| [Series Metadata](https://veri-glow.com/fred.stlouisfed.org/series/) | `fred.stlouisfed.org/series/` | 1 |
+| [Browse by Category](https://veri-glow.com/fred.stlouisfed.org/category/series/) | `fred.stlouisfed.org/category/series/` | 1 |
+| [Release Calendar](https://veri-glow.com/fred.stlouisfed.org/releases/) | `fred.stlouisfed.org/releases/` | 1 |
+| [Discover by Tag](https://veri-glow.com/fred.stlouisfed.org/tags/series/) | `fred.stlouisfed.org/tags/series/` | 1 |
+
 ### International APIs — 4 maps
 
 | Source | URL | Functions |
@@ -220,4 +273,4 @@ Currently indexed: **55 Shanghai Stock Exchange pages** + 4 international APIs.
 | [Weather Forecast API](https://veri-glow.com/open-meteo.com/en/docs/) | `open-meteo.com/en/docs/` | 1 |
 | [Hacker News Top Stories](https://veri-glow.com/news.ycombinator.com/) | `news.ycombinator.com/` | 2 |
 
-More maps are being added continuously. Visit [veri-glow.com](https://veri-glow.com) to browse all 59 maps or request a new one.
+More maps are being added continuously. Visit [veri-glow.com](https://veri-glow.com) to browse all 65 maps or request a new one.
