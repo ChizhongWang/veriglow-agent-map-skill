@@ -17,6 +17,17 @@
       },
       "source": "./plugins/veriglow-agent-map",
       "category": "productivity"
+    },
+    {
+      "name": "citeanything",
+      "description": "Create verifiable evidence citations for data claims — generates [@ev:TOKEN] markers backed by source URLs, anchors, and screenshots",
+      "version": "0.1.0",
+      "author": {
+        "name": "VeriGlow",
+        "url": "https://veri-glow.com"
+      },
+      "source": "./plugins/citeanything",
+      "category": "productivity"
     }
   ]
 }
