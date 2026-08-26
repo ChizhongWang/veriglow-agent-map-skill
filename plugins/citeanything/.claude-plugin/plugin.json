@@ -1,12 +1,12 @@
 {
   "name": "citeanything",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Create verifiable evidence citations for every data claim — generates [@ev:TOKEN] markers backed by source URLs, anchors, and screenshots",
   "author": {
     "name": "VeriGlow",
     "url": "https://veri-glow.com"
   },
-  "homepage": "https://citeanything.veri-glow.com",
+  "homepage": "https://citeanything.app",
   "license": "MIT",
   "keywords": ["citation", "evidence", "verifiable", "research", "fact-checking", "knowledge-base"],
   "skills": "./skills/"

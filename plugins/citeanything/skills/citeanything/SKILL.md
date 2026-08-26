@@ -8,10 +8,10 @@ license: MIT
 compatibility: Works with Claude Code and compatible AI agents
 metadata:
   author: VeriGlow
-  version: "0.1.0"
+  version: "0.1.1"
   openclaw:
     emoji: "📎"
-    homepage: "https://citeanything.veri-glow.com"
+    homepage: "https://citeanything.app"
     requires:
       bins:
         - curl
@@ -33,7 +33,7 @@ Use this skill **after** you have obtained data (from a web API, web page, or KB
 ## API Endpoint
 
 ```
-POST https://citeanything.veri-glow.com/api/citation
+POST https://citeanything.app/api/citation
 ```
 
 **Authentication:** `Authorization: Bearer $USER_JWT`
@@ -61,7 +61,7 @@ POST https://citeanything.veri-glow.com/api/citation
 {
   "token": "a1b2c3d4",
   "uid": "unique-id",
-  "url": "https://citeanything.veri-glow.com/e/a1b2c3d4"
+  "url": "https://citeanything.app/e/a1b2c3d4"
 }
 ```
 
@@ -78,7 +78,7 @@ The user's frontend will render `[@ev:TOKEN]` as a clickable citation link.
 ## Example: Web Citation
 
 ```bash
-curl -X POST "https://citeanything.veri-glow.com/api/citation" \
+curl -X POST "https://citeanything.app/api/citation" \
   -H "Authorization: Bearer $USER_JWT" \
   -H "Content-Type: application/json" \
   -d '{
@@ -97,12 +97,12 @@ curl -X POST "https://citeanything.veri-glow.com/api/citation" \
 When citing knowledge base documents, use `source_type: "kb"` with additional KB-specific fields:
 
 ```bash
-curl -X POST "https://citeanything.veri-glow.com/api/citation" \
+curl -X POST "https://citeanything.app/api/citation" \
   -H "Authorization: Bearer $USER_JWT" \
   -H "Content-Type: application/json" \
   -d '{
     "claim": "Tesla total revenues in 2025 were $94.8 billion",
-    "source_url": "https://citeanything.veri-glow.com/kb/user/1/abc123def456.html",
+    "source_url": "https://citeanything.app/kb/user/1/abc123def456.html",
     "quoted_text": "Total revenues 94,827 97,690 96,773 Cost of revenues 76,303 79,087 79,113 Gross profit 18,524 18,603 17,660",
     "anchor": "Total revenues 94,827",
     "citation_type": "text",
@@ -159,7 +159,7 @@ Users can upload local PDF files to the CiteAnything server for citation. The se
 ### Step 1: Upload the PDF
 
 ```bash
-curl -X POST "https://citeanything.veri-glow.com/api/kb/upload" \
+curl -X POST "https://citeanything.app/api/kb/upload" \
   -H "Authorization: Bearer $USER_JWT" \
   -F "file=@/path/to/document.pdf" \
   -F "display_name=My Research Report"
@@ -182,7 +182,7 @@ Save the `stem` — you'll need it for citations.
 PDF → HTML conversion runs in the background. Poll until `status` becomes `"ready"`:
 
 ```bash
-curl -s "https://citeanything.veri-glow.com/api/kb/documents" \
+curl -s "https://citeanything.app/api/kb/documents" \
   -H "Authorization: Bearer $USER_JWT"
 ```
 
@@ -195,13 +195,13 @@ Check the document's `status` field:
 
 Once ready, the document is available at:
 ```
-https://citeanything.veri-glow.com/kb/user/{user_id}/{stem}.html
+https://citeanything.app/kb/user/{user_id}/{stem}.html
 ```
 
 **Important:** Do NOT use WebFetch — KB HTML files are too large and WebFetch will only return CSS. Always use `curl` + Python:
 
 ```bash
-curl -s "https://citeanything.veri-glow.com/kb/user/{user_id}/{stem}.html" -o document.html
+curl -s "https://citeanything.app/kb/user/{user_id}/{stem}.html" -o document.html
 ```
 
 Then extract text with Python. **Critical:** pdf2htmlEX uses PUA (Private Use Area) Unicode characters (U+E000–U+F8FF) instead of spaces. You MUST replace them:
@@ -245,11 +245,11 @@ Use `POST /api/citation` with KB-specific fields (see "Example: KB Document Cita
 
 ```bash
 # List all documents
-curl -s "https://citeanything.veri-glow.com/api/kb/documents" \
+curl -s "https://citeanything.app/api/kb/documents" \
   -H "Authorization: Bearer $USER_JWT"
 
 # Delete a document
-curl -X DELETE "https://citeanything.veri-glow.com/api/kb/documents/{doc_id}" \
+curl -X DELETE "https://citeanything.app/api/kb/documents/{doc_id}" \
   -H "Authorization: Bearer $USER_JWT"
 ```
 
